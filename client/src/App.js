@@ -1,6 +1,7 @@
 import './App.css';
 import Header from './components/Header'
 import Body from './components/Body'
+import CountryCard from './components/CountryCard'
 
 function App() {
   return (
@@ -9,6 +10,8 @@ function App() {
       <Header />
 
       <Body />
+
+      <CountryCard />
 
     </div>
   );
