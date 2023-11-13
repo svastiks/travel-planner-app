@@ -9,7 +9,7 @@ export default function Body() {
                 Trips
             </h2>
 
-            <h3>Upcoming | OLD</h3>
+            <h3>Upcoming trips | OLD trips</h3>
 
         </div>
     )

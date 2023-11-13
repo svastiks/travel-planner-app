@@ -6,7 +6,7 @@ export default function Header() {
         <div>
 
             <h1>
-                Travel Dashboard
+                My Travel Dashboard
             </h1>
 
         </div>
