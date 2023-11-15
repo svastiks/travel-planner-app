@@ -14,6 +14,8 @@ function App() {
 
       <CountryCard />
 
+      <NextDestination />
+
     </div>
   );
 }
