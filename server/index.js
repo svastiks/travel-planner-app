@@ -9,6 +9,8 @@ const env = require("dotenv");
 
 const app = express();
 
+app.use(express.json()); // send JSON data to the client
+
 env.config();
 
 mongoose.connect(process.env.MONGO_CONNECTION).then(() => {
