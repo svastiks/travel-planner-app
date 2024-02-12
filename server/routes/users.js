@@ -53,12 +53,11 @@ router.post("/login", async (req, res) => {
                 res.status(400).json("Incorrect username or password!");
             }
             else {
-                console.log("SUCESS -> USer logged in successfully!");
-                req.status(200).json("Login Successful.");
+                console.log("SUCESS -> User logged in successfully!");
+                res.status(200).json("Login Successful.");
             }
         }
     }
-
     catch (err) {
         console.log("FAILED -> User not found!")
         res.status(500).json(err);
