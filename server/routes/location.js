@@ -15,10 +15,9 @@ router.post("/", async (req, res) => {
         console.log("SUCCESS -> Location added to DB.")
     }
     catch (err) {
-        console.log("FAILED -> Location added to DB.")
+        console.log("FAILED -> Loction not added.")
         res.status(500).json(err);
     }
-
 })
 
 // Retrieve PIN to display on client side
