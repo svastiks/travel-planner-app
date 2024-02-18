@@ -18,6 +18,7 @@ function App() {
       <Map
         initialViewState={{}}
         //mapboxAccessToken={process.env.TRAVEL_APP_TOKEN}
+        style={{ width: "100vh", height: "100vh" }}
         mapboxAccessToken='pk.eyJ1Ijoic3Zhc3Rpa3MiLCJhIjoiY2xzcXNzdGZrMGo4OTJpczN2bDlhYXFkZyJ9.UClNePM0ExbrQx0qBCQPMw'
         mapStyle="mapbox://styles/svastiks/clsqsyb7w04n501p22qi16i7o"
       >
