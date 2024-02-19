@@ -1,9 +1,7 @@
 import './App.css';
-import Header from './components/Header'
-import Body from './components/Body'
-import CountryCard from './components/CountryCard'
-import NextDestination from './components/NextDestination'
 import * as React from 'react'
+import Login from './components/Login/Login.jsx'
+import Register from './components/Register/Register.jsx'
 import Map, { Marker, NavigationControl, Popup } from 'react-map-gl'
 import "mapbox-gl/dist/mapbox-gl.css"
 import axios from 'axios'
@@ -12,6 +10,8 @@ import { timeago } from 'timeago.js'
 import PushPinIcon from '@mui/icons-material/PushPin';
 
 import StarIcon from '@mui/icons-material/Star';
+
+import LogoutIcon from '@mui/icons-material/Logout';
 
 function App() {
 
@@ -24,6 +24,10 @@ function App() {
   const [rating, setRating] = React.useState(1);
 
   const [currentUser, setCurrentUser] = React.useState(null);
+
+  const [showLogin, setShowLogin] = React.useState(false);
+
+  const [showRegister, setShowRegister] = React.useState(false);
 
 
   const [viewPort, setViewPort] = React.useState({
@@ -194,11 +198,11 @@ function App() {
               (
                 <div>
 
-                  <button className='button_login'>
+                  <button className='button_login' onClick={() => { setShowLogin(true) }}>
                     Login
                   </button>
 
-                  <button className='button_logout'>
+                  <button className='button_logout' onClick={() => { setShowRegister(true) }}>
                     Logout
                   </button>
 
@@ -210,8 +214,8 @@ function App() {
 
       </div>
 
-      {showRegister &&}
-      {showLogin &&}
+      {showRegister && <Register />}
+      {showLogin && <Login />}
 
     </div>
 
