@@ -23,6 +23,14 @@ function App() {
     zoom: 14
   })
 
+  const [currenrPlaceId, setCurrentPlaceId] = React.useState(null);
+
+  const handleMarkerClicked = (id, lat, long) => {
+    console.log(lat);
+    console.log(long);
+    setCurrentPlaceId(id);
+  }
+
   React.useEffect(() => {
     const getPins = async () => {
       try {
@@ -67,10 +75,19 @@ function App() {
 
                 <PushPinIcon
                   className='icon'
+                  onClick={() => handleMarkerClicked(pin.id, pin.latitude, pin.longitude)}
                   style={{ fontSize: viewPort * 2, color: "blue" }}
                 />
 
               </Marker>
+
+              {
+
+                // pin.id === currenrPlaceId && (
+
+                // )
+
+              }
 
             </>
           ))
