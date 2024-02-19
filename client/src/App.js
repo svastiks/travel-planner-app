@@ -23,6 +23,8 @@ function App() {
   const [descr, setDescription] = React.useState(null);
   const [rating, setRating] = React.useState(1);
 
+  const [currentUser, setCurrentUser] = React.useState(null);
+
 
   const [viewPort, setViewPort] = React.useState({
     longitude: 12.4,
@@ -182,7 +184,38 @@ function App() {
 
       </Map>
 
-    </div >
+      <div className='footer'>
+
+        <div className='footer_down'>
+
+          {
+            currentUser ? (<button className='button_logout'>Logout</button>)
+              :
+              (
+                <div>
+
+                  <button className='button_login'>
+                    Login
+                  </button>
+
+                  <button className='button_logout'>
+                    Logout
+                  </button>
+
+                </div>
+              )
+          }
+
+        </div>
+
+      </div>
+
+      {showRegister &&}
+      {showLogin &&}
+
+    </div>
+
+
   );
 }
 
