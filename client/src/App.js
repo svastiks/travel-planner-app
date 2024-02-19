@@ -8,13 +8,32 @@ import Map, { NavigationControl } from 'react-map-gl'
 import "mapbox-gl/dist/mapbox-gl.css"
 import axios from 'axios'
 
+import PushPinIcon from '@mui/icons-material/PushPin';
+
 // const env = require("dotenv");
 
 // env.config();
 
 function App() {
 
-  fetch
+  const [pins, setPins] = React.useState([]);
+
+  React.useEffect(() => {
+    const getPins = async () => {
+      try {
+        const response = await axios.get("/pins");
+        console.log(response);
+        setPins(response.data);
+      }
+      catch (err) {
+        console.log(err);
+      }
+    }
+
+    getPins();
+  }, [])
+
+  fetch().then()
 
   return (
     <div>
@@ -29,7 +48,9 @@ function App() {
         mapStyle="mapbox://styles/svastiks/clsqsyb7w04n501p22qi16i7o"
       >
 
-        <NavigationControl></NavigationControl>
+        <NavigationControl />
+
+        <PushPinIcon />
 
       </Map>
 
