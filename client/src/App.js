@@ -17,6 +17,11 @@ import PushPinIcon from '@mui/icons-material/PushPin';
 function App() {
 
   const [pins, setPins] = React.useState([]);
+  const [viewPort, setViewPort] = React.useState({
+    longitude: 12.4,
+    latitude: 37.8,
+    zoom: 14
+  })
 
   React.useEffect(() => {
     const getPins = async () => {
@@ -42,7 +47,7 @@ function App() {
         //mapboxAccessToken={process.env.TRAVEL_APP_TOKEN}
         container={'map'}
         projection={'globe'}
-        initialViewState={{}}
+        initialViewState={{ viewPort }}
         style={{ width: "100vw", height: "100vh" }}
         mapboxAccessToken='pk.eyJ1Ijoic3Zhc3Rpa3MiLCJhIjoiY2xzcXNzdGZrMGo4OTJpczN2bDlhYXFkZyJ9.UClNePM0ExbrQx0qBCQPMw'
         mapStyle="mapbox://styles/svastiks/clsqsyb7w04n501p22qi16i7o"
@@ -51,21 +56,20 @@ function App() {
         <NavigationControl />
 
         {
-          pins.map(pin =>(
+          pins.map(pin => (
             <>
 
-              <Marker 
-              longitude = {pin.longitude}
-              latitude = {pin.latitude}
-              anchor = "center"
+              <Marker
+                longitude={pin.longitude}
+                latitude={pin.latitude}
+                anchor="center"
               >
 
-                <PushPinIcon 
-
+                <PushPinIcon
                   className='icon'
-
+                  style={{ fontSize: viewPort * 2, color: "blue" }}
                 />
-                
+
               </Marker>
 
             </>
