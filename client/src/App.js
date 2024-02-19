@@ -13,13 +13,17 @@ import PushPinIcon from '@mui/icons-material/PushPin';
 
 import StarIcon from '@mui/icons-material/Star';
 
-// const env = require("dotenv");
-
-// env.config();
-
 function App() {
 
   const [pins, setPins] = React.useState([]);
+
+  const [newPlace, setNewPlace] = React.useState(null);
+
+  const [title, setTitle] = React.useState(null);
+  const [descr, setDescription] = React.useState(null);
+  const [rating, setRating] = React.useState(1);
+
+
   const [viewPort, setViewPort] = React.useState({
     longitude: 12.4,
     latitude: 37.8,
@@ -28,10 +32,24 @@ function App() {
 
   const [currenrPlaceId, setCurrentPlaceId] = React.useState(null);
 
+  const handleAddClick = (e) => {
+    let lat = e.lngLat.lat
+    let lon = e.lngLat.lng
+
+    setNewPlace({
+      lat: lat,
+      lng: lon
+    })
+  }
+
   const handleMarkerClicked = (id, lat, long) => {
     console.log(lat);
     console.log(long);
     setCurrentPlaceId(id);
+  }
+
+  const handlePinSubmit = () => {
+
   }
 
   React.useEffect(() => {
@@ -62,6 +80,7 @@ function App() {
         style={{ width: "100vw", height: "100vh" }}
         mapboxAccessToken='pk.eyJ1Ijoic3Zhc3Rpa3MiLCJhIjoiY2xzcXNzdGZrMGo4OTJpczN2bDlhYXFkZyJ9.UClNePM0ExbrQx0qBCQPMw'
         mapStyle="mapbox://styles/svastiks/clsqsyb7w04n501p22qi16i7o"
+        onDblClick={handleAddClick}
       >
 
         <NavigationControl />
@@ -118,7 +137,43 @@ function App() {
                   </Popup>
 
                 )
+              }
 
+              {
+                newPlace &&
+                <Popup
+                  longitude={newPlace.lng}
+                  latitude={newPlace.lat}
+                  closeOnClick={false}
+                  closeOnMove={false}
+                  onClose={() => setNewPlace(null)}
+                  anchor="left"
+                >
+
+                  <div>
+                    <form onSubmit={handlePinSubmit}>
+                      <label>Title</label>
+                      <input placeholder='Title' onChange={(e) => setTitle(e.target.value)}></input>
+
+                      <label>Review</label>
+                      <textarea placeholder='Why do you like this location?' onChange={(e) => setDescription(e.target.value)}></textarea>
+
+                      <label>Rating</label>
+                      <select onChange={(e) => setRating(e.target.value)}>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+
+                      </select>
+
+                      <button className='submitButton' type='submit'>Add a pin here!</button>
+
+                    </form>
+                  </div>
+
+                </Popup>
               }
 
             </>
@@ -126,16 +181,6 @@ function App() {
         }
 
       </Map>
-
-
-
-      {/* <Header />
-
-      <Body />
-
-      <CountryCard />
-
-      <NextDestination /> */}
 
     </div >
   );
