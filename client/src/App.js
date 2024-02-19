@@ -4,11 +4,14 @@ import Body from './components/Body'
 import CountryCard from './components/CountryCard'
 import NextDestination from './components/NextDestination'
 import * as React from 'react'
-import Map, { Marker, NavigationControl } from 'react-map-gl'
+import Map, { Marker, NavigationControl, Popup } from 'react-map-gl'
 import "mapbox-gl/dist/mapbox-gl.css"
 import axios from 'axios'
+import { timeago } from 'timeago.js'
 
 import PushPinIcon from '@mui/icons-material/PushPin';
+
+import StarIcon from '@mui/icons-material/Star';
 
 // const env = require("dotenv");
 
@@ -83,9 +86,38 @@ function App() {
 
               {
 
-                // pin.id === currenrPlaceId && (
+                pin.id === currenrPlaceId && (
 
-                // )
+                  <Popup
+                    longitude={pin.longitude}
+                    latitude={pin.latitude}
+                    closeOnClick={false}
+                    closeOnMove={false}
+                    anchor="left"
+                  >
+
+                    <div className='card'>
+                      <label>Place</label>
+                      <h4 className='place'>{pin.title}</h4>
+                      <label>Review</label>
+                      <p className='description'>{pin.descr}</p>
+                      <div className='stars'>
+                        {Array(pin.rating).fill(<StarIcon className='star' />)}
+                      </div>
+
+                      <label>Information</label>
+
+                      <div className='info'>
+
+                        <span className='username'>Created by {pin.username}</span>
+                        <span className='date'>{timeago(pin.createdAt)}</span>
+                      </div>
+
+                    </div>
+
+                  </Popup>
+
+                )
 
               }
 
