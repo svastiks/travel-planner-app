@@ -4,7 +4,7 @@ import Body from './components/Body'
 import CountryCard from './components/CountryCard'
 import NextDestination from './components/NextDestination'
 import * as React from 'react'
-import Map, { NavigationControl } from 'react-map-gl'
+import Map, { Marker, NavigationControl } from 'react-map-gl'
 import "mapbox-gl/dist/mapbox-gl.css"
 import axios from 'axios'
 
@@ -50,7 +50,27 @@ function App() {
 
         <NavigationControl />
 
-        <PushPinIcon />
+        {
+          pins.map(pin =>(
+            <>
+
+              <Marker 
+              longitude = {pin.longitude}
+              latitude = {pin.latitude}
+              anchor = "center"
+              >
+
+                <PushPinIcon 
+
+                  className='icon'
+
+                />
+                
+              </Marker>
+
+            </>
+          ))
+        }
 
       </Map>
 
