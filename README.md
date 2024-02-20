@@ -1,4 +1,4 @@
-# Travel App
+# Travel App (https://quicktravelplan.netlify.app/)
 
 I travelled to Europe for an exchange course during my summer semester and always felt the need for a Travel Planner which is why I decided to create one for my future trips
 
