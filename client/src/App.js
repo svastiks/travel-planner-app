@@ -214,8 +214,8 @@ function App() {
 
       </div>
 
-      {showRegister && <Register />}
-      {showLogin && <Login />}
+      {showRegister && <Register setShowRegister={setShowRegister} />}
+      {showLogin && <Login setShowLogin={setShowLogin} setCurrentUser={setCurrentUser} />}
 
     </div>
 
