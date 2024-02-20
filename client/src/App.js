@@ -54,7 +54,48 @@ function App() {
     setCurrentPlaceId(id);
   }
 
-  const handlePinSubmit = () => {
+  const handleLogout = () => {
+    setCurrentUser(null);
+    
+  }
+
+  const handlePinSubmit = async (e) => {
+
+    e.preventDefault();
+
+    const newPin = {
+
+      userName: currentUser,
+      title: title,
+      rating: rating,
+      latitude: newPlace.lat,
+      longitude: newPlace.lng,
+      descr: descr
+    }
+
+    try {
+
+      if (!currentUser) {
+
+        console.log("No user!");
+      }
+      else {
+
+        const res = await axios.post("/pins", newPin);
+        setPins([...pins, res.data]);
+        setNewPlace(null)
+
+        //Reset
+        setRating(1);
+        setDescription(null);
+        setTitle(null);
+
+        console.log(res);
+      }
+
+    } catch (err) {
+      console.log(err);
+    }
 
   }
 
@@ -104,7 +145,7 @@ function App() {
                 <PushPinIcon
                   className='icon'
                   onClick={() => handleMarkerClicked(pin.id, pin.latitude, pin.longitude)}
-                  style={{ fontSize: viewPort * 2, color: "blue" }}
+                  style={{ fontSize: viewPort * 2, color: pin.userName === currentUser ? "slateblue" : "red" }}
                 />
 
               </Marker>
@@ -193,7 +234,7 @@ function App() {
         <div className='footer_down'>
 
           {
-            currentUser ? (<button className='button_logout'>Logout</button>)
+            currentUser ? (<button className='button_logout' onClick={() => handleLogout}>Logout</button>)
               :
               (
                 <div>
