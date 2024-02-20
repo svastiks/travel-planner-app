@@ -1,12 +1,42 @@
 import React, { useRef } from 'react'
 
+import axios from 'axios'
+
+import "./Register.css"
+
 import LogoutIcon from '@mui/icons-material/Logout';
+
+import CloseIcon from '@mui/icons-material/Close';
 
 const Register = ({ setShowRegister }) => {
 
     const nameRef = useRef();
     const emailRef = useRef();
     const passRef = useRef();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const newUser = {
+            userName: nameRef.current.value,
+            email: emailRef.current.value,
+            password: passRef.current.value
+        }
+
+        try {
+
+            const res = await axios.post("/users/register", newUser);
+
+            console.log(res);
+
+            setShowRegister(false);
+
+        } catch (err) {
+            console.log(err);
+        }
+
+
+    }
 
     return (
         <div className='register_container'>
@@ -19,12 +49,16 @@ const Register = ({ setShowRegister }) => {
 
             </div>
 
-            <form>
-                <input type='text' placeholder='Username' />
-                <input type='email' placeholder='Email' />
-                <input type='password' placeholder='Password' />
+            <form onSubmit={handleSubmit}>
+                <input type='text' placeholder='Username' ref={nameRef} />
+                <input type='email' placeholder='Email' ref={emailRef} />
+                <input type='password' placeholder='Password' ref={passRef} />
+
+                <button className='register_button'>Register</button>
 
             </form>
+
+            <CloseIcon className='register_cancel' onClick={() => setShowRegister(false)} />
 
         </div>
     )
