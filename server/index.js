@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json()); // send JSON data to the client
 env.config();
 
-mongoose.connect(process.env.MONGO_CONNECTION).then(() => {
+mongoose.connect("mongodb+srv://travelAdmin:admin@traveldb.lnkhvug.mongodb.net/?retryWrites=true&w=majority").then(() => {
     console.log("SUCCESS -> Conected to DB.")
 }).catch((err) => console.log("FAILED -> Could not connect to DB!"))
 
