@@ -66,7 +66,7 @@ const Login = ({ setShowLogin, setCurrentUser }) => {
 
                 <input type='text' placeholder='username' ref={nameRef}></input>
 
-                <input type='text' placeholder='password' ref={passRef}></input>
+                <input type='password' placeholder='password' ref={passRef}></input>
 
                 <button className='login_button'>Login</button>
 

@@ -54,7 +54,7 @@ function App() {
     zoom: 14
   })
 
-  const [currenrPlaceId, setCurrentPlaceId] = React.useState(null);
+  const [currentPlaceId, setCurrentPlaceId] = React.useState(null);
 
   const handleAddClick = (e) => {
     let lat = e.lngLat.lat
@@ -67,8 +67,7 @@ function App() {
   }
 
   const handleMarkerClicked = (id, lat, long) => {
-    console.log(lat);
-    console.log(long);
+
     setCurrentPlaceId(id);
   }
 
@@ -91,15 +90,18 @@ function App() {
       descr: descr
     }
 
+    //console.log(newPin)
+
     try {
 
       if (!currentUser) {
-
+        //console.log(currentUser)
         userNotLoggedIn();
       }
       else {
 
-        const res = await axios.post("/pins", newPin);
+        const res = await axios.post("/locations", newPin);
+        //console.log(res);
         setPins([...pins, res.data]);
         setNewPlace(null)
 
@@ -110,7 +112,7 @@ function App() {
         setDescription(null);
         setTitle(null);
 
-        console.log(res);
+        //console.log(res);
       }
 
     } catch (err) {
@@ -123,8 +125,8 @@ function App() {
   React.useEffect(() => {
     const getPins = async () => {
       try {
-        const response = await axios.get("/pins");
-        console.log(response);
+        const response = await axios.get("/locations");
+        //console.log(response);
         setPins(response.data);
       }
       catch (err) {
@@ -168,7 +170,7 @@ function App() {
 
                 <PushPinIcon
                   className='icon'
-                  onClick={() => handleMarkerClicked(pin.id, pin.latitude, pin.longitude)}
+                  onClick={() => handleMarkerClicked(pin._id, pin.latitude, pin.longitude)}
                   style={{ fontSize: viewPort * 2, color: pin.userName === currentUser ? "slateblue" : "red" }}
                 />
 
@@ -176,7 +178,7 @@ function App() {
 
               {
 
-                pin.id === currenrPlaceId && (
+                pin._id === currentPlaceId && (
 
                   <Popup
                     longitude={pin.longitude}
@@ -199,7 +201,7 @@ function App() {
 
                       <div className='info'>
 
-                        <span className='username'>Created by {pin.username}</span>
+                        <span className='username'>Created by {pin.userName}</span>
                         <span className='date'>{format(pin.createdAt)}</span>
                       </div>
 
