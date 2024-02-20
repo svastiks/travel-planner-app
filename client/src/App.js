@@ -5,13 +5,31 @@ import Register from './components/Register/Register.jsx'
 import Map, { Marker, NavigationControl, Popup } from 'react-map-gl'
 import "mapbox-gl/dist/mapbox-gl.css"
 import axios from 'axios'
-import { timeago } from 'timeago.js'
+import { format } from 'timeago.js'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import PushPinIcon from '@mui/icons-material/PushPin';
 
 import StarIcon from '@mui/icons-material/Star';
 
 import LogoutIcon from '@mui/icons-material/Logout';
+
+const pinSuccess = () => {
+  toast.success("Pin was successfully added!");
+}
+
+const userNotLoggedIn = () => {
+  toast.warning("Please log in to add and save pins!");
+}
+
+const loggedOut = (user) => {
+  toast.warning(user + "has successfully logged out!");
+}
+
+const pinNotAdded = () => {
+  toast.error("Pin could not be added! Please fill out all the fields!");
+}
 
 function App() {
 
@@ -44,7 +62,7 @@ function App() {
 
     setNewPlace({
       lat: lat,
-      lng: lon
+      lng: lon,
     })
   }
 
@@ -55,8 +73,8 @@ function App() {
   }
 
   const handleLogout = () => {
+    loggedOut(currentUser);
     setCurrentUser(null);
-    
   }
 
   const handlePinSubmit = async (e) => {
@@ -77,13 +95,15 @@ function App() {
 
       if (!currentUser) {
 
-        console.log("No user!");
+        userNotLoggedIn();
       }
       else {
 
         const res = await axios.post("/pins", newPin);
         setPins([...pins, res.data]);
         setNewPlace(null)
+
+        pinSuccess();
 
         //Reset
         setRating(1);
@@ -94,6 +114,7 @@ function App() {
       }
 
     } catch (err) {
+      pinNotAdded();
       console.log(err);
     }
 
@@ -114,8 +135,6 @@ function App() {
     getPins();
   }, [])
 
-  fetch().then()
-
   return (
     <div>
 
@@ -129,6 +148,11 @@ function App() {
         mapStyle="mapbox://styles/svastiks/clsqsyb7w04n501p22qi16i7o"
         onDblClick={handleAddClick}
       >
+
+        <ToastContainer
+          position='top-left'
+          theme='dark'
+        />
 
         <NavigationControl />
 
@@ -176,57 +200,52 @@ function App() {
                       <div className='info'>
 
                         <span className='username'>Created by {pin.username}</span>
-                        <span className='date'>{timeago(pin.createdAt)}</span>
+                        <span className='date'>{format(pin.createdAt)}</span>
                       </div>
 
                     </div>
 
                   </Popup>
-
-                )
-              }
-
-              {
-                newPlace &&
-                <Popup
-                  longitude={newPlace.lng}
-                  latitude={newPlace.lat}
-                  closeOnClick={false}
-                  closeOnMove={false}
-                  onClose={() => setNewPlace(null)}
-                  anchor="left"
-                >
-
-                  <div>
-                    <form onSubmit={handlePinSubmit}>
-                      <label>Title</label>
-                      <input placeholder='Title' onChange={(e) => setTitle(e.target.value)}></input>
-
-                      <label>Review</label>
-                      <textarea placeholder='Why do you like this location?' onChange={(e) => setDescription(e.target.value)}></textarea>
-
-                      <label>Rating</label>
-                      <select onChange={(e) => setRating(e.target.value)}>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-
-                      </select>
-
-                      <button className='submitButton' type='submit'>Add a pin here!</button>
-
-                    </form>
-                  </div>
-
-                </Popup>
-              }
-
+                )}
             </>
-          ))
-        }
+          ))}
 
+        {
+          newPlace &&
+          <Popup
+            longitude={newPlace.lng}
+            latitude={newPlace.lat}
+            closeOnClick={false}
+            closeOnMove={false}
+            onClose={() => setNewPlace(null)}
+            anchor="left"
+          >
+
+            <div>
+              <form onSubmit={handlePinSubmit}>
+                <label>Title</label>
+                <input placeholder='Title' onChange={(e) => setTitle(e.target.value)}></input>
+
+                <label>Review</label>
+                <textarea placeholder='Why do you like this location?' onChange={(e) => setDescription(e.target.value)}></textarea>
+
+                <label>Rating</label>
+                <select onChange={(e) => setRating(e.target.value)}>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+
+                </select>
+
+                <button className='submitButton' type='submit'>Add a pin here!</button>
+
+              </form>
+            </div>
+
+          </Popup>
+        }
       </Map>
 
       <div className='footer'>
@@ -234,17 +253,17 @@ function App() {
         <div className='footer_down'>
 
           {
-            currentUser ? (<button className='button_logout' onClick={() => handleLogout}>Logout</button>)
+            currentUser ? (<button className='button logout' onClick={handleLogout}>Logout</button>)
               :
               (
                 <div>
 
-                  <button className='button_login' onClick={() => { setShowLogin(true) }}>
+                  <button className='button login' onClick={() => { setShowLogin(true) }}>
                     Login
                   </button>
 
-                  <button className='button_logout' onClick={() => { setShowRegister(true) }}>
-                    Logout
+                  <button className='button register' onClick={() => { setShowRegister(true) }}>
+                    Register
                   </button>
 
                 </div>

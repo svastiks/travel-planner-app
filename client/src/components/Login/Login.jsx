@@ -2,11 +2,22 @@ import React, { useRef } from 'react'
 
 import "./Login.css"
 
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 import axios from 'axios'
 
 import LogoutIcon from '@mui/icons-material/Logout';
 
 import CloseIcon from '@mui/icons-material/Close';
+
+const loginSuccessful = () => {
+    toast.success("Login Successful!");
+}
+
+const loginNotSuccessful = () => {
+    toast.error("Login not successful, please try again!");
+}
 
 const Login = ({ setShowLogin, setCurrentUser }) => {
 
@@ -25,10 +36,17 @@ const Login = ({ setShowLogin, setCurrentUser }) => {
             const res = await axios.post("/users/login", newUser);
 
             console.log(res);
-            setCurrentUser(res.data.userName)
+
+            loginSuccessful();
+
+            const userData = JSON.parse(res.config.data);
+
+            setCurrentUser(userData.userName)
+
             setShowLogin(false);
 
         } catch (err) {
+            loginNotSuccessful();
             console.log(err);
         }
     }

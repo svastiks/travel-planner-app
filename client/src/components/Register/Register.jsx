@@ -2,12 +2,22 @@ import React, { useRef } from 'react'
 
 import axios from 'axios'
 
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 import "./Register.css"
 
 import LogoutIcon from '@mui/icons-material/Logout';
 
 import CloseIcon from '@mui/icons-material/Close';
 
+const userRegistered = (user) => {
+    toast.success("You have successfully created a user: " + user)
+}
+
+const userNotRegistered = () => {
+    toast.error("User not registered, please try again.")
+}
 const Register = ({ setShowRegister }) => {
 
     const nameRef = useRef();
@@ -31,7 +41,10 @@ const Register = ({ setShowRegister }) => {
 
             setShowRegister(false);
 
+            userRegistered(nameRef.current.value);
+
         } catch (err) {
+            userNotRegistered();
             console.log(err);
         }
 
