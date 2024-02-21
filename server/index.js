@@ -26,7 +26,7 @@ app.use("/api/locations", locationRoute);
 
 app.use("/api/users", userRoute);
 
-app.listen(3000, () => {
+app.listen(443, () => {
     console.log("SUCCESS -> Backend server started.")
 })
 
