@@ -1,5 +1,4 @@
 # Travel App (https://quicktravelplan.netlify.app/)
-# NOTE: The app backend server is currently hosted on a free tier which is why the response might be slow when you first get on the web app. Please watch the demo video to get a better idea of how the app works. Currently working on moving the app to an aws e2 instance.
 
 I travelled to Europe for an exchange course during my summer semester and always felt the need for a Travel Planner which is why I decided to create one for my future trips
 
