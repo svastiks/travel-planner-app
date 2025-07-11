@@ -6,14 +6,12 @@ import Map, { Marker, NavigationControl, Popup } from 'react-map-gl'
 import "mapbox-gl/dist/mapbox-gl.css"
 import axios from 'axios'
 import { format } from 'timeago.js'
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 import PushPinIcon from '@mui/icons-material/PushPin';
 
 import StarIcon from '@mui/icons-material/Star';
-
-import LogoutIcon from '@mui/icons-material/Logout';
 
 const pinSuccess = () => {
   toast.success("Pin was successfully added!");
@@ -45,13 +43,6 @@ function App() {
   const [showLogin, setShowLogin] = React.useState(false);
 
   const [showRegister, setShowRegister] = React.useState(false);
-
-
-  const [viewPort, setViewPort] = React.useState({
-    longitude: 12.4,
-    latitude: 37.8,
-    zoom: 14
-  })
 
   const [currentPlaceId, setCurrentPlaceId] = React.useState(null);
 
@@ -159,17 +150,11 @@ function App() {
         //mapboxAccessToken={process.env.TRAVEL_APP_TOKEN}
         container={'map'}
         projection={'globe'}
-        initialViewState={{ viewPort }}
         style={{ width: "100vw", height: "100vh" }}
         mapboxAccessToken='pk.eyJ1Ijoic3Zhc3Rpa3MiLCJhIjoiY2xzcXNzdGZrMGo4OTJpczN2bDlhYXFkZyJ9.UClNePM0ExbrQx0qBCQPMw'
         mapStyle="mapbox://styles/svastiks/clsqsyb7w04n501p22qi16i7o"
         onDblClick={handleAddClick}
       >
-
-        <ToastContainer
-          position='top-left'
-          theme='dark'
-        />
 
         <NavigationControl />
 
@@ -186,7 +171,6 @@ function App() {
                 <PushPinIcon
                   className='icon'
                   onClick={() => handleMarkerClicked(pin._id, pin.latitude, pin.longitude)}
-                  style={{ fontSize: viewPort * 2, color: pin.userName === currentUser ? "slateblue" : "red" }}
                 />
 
               </Marker>
