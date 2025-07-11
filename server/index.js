@@ -23,11 +23,11 @@ mongoose.connect("mongodb+srv://travelAdmin:admin@traveldb.lnkhvug.mongodb.net/?
     console.log("SUCCESS -> Conected to DB.")
 }).catch((err) => console.log("FAILED -> Could not connect to DB!"))
 
-app.use("/api/locations", locationRoute);
+app.use("/locations", locationRoute);
 
-app.use("/api/users", userRoute);
+app.use("/users", userRoute);
 
-app.use("/api/ping", pingRoute);
+app.use("/ping", pingRoute);
 
 app.listen(3000, () => {
     console.log("SUCCESS -> Backend server started.")
