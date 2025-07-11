@@ -32,7 +32,6 @@ const pinNotAdded = () => {
 }
 
 function App() {
-
   const [pins, setPins] = React.useState([]);
 
   const [newPlace, setNewPlace] = React.useState(null);
@@ -100,7 +99,7 @@ function App() {
       }
       else {
 
-        const res = await axios.post("/locations", newPin);
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/locations`, newPin);
         //console.log(res);
         setPins([...pins, res.data]);
         setNewPlace(null)
@@ -125,7 +124,7 @@ function App() {
   React.useEffect(() => {
     const getPins = async () => {
       try {
-        const response = await axios.get("/locations");
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/locations`);
         //console.log(response);
         setPins(response.data);
       }
@@ -136,6 +135,22 @@ function App() {
 
     getPins();
   }, [])
+
+  React.useEffect(() => {
+    const TEN_MINUTES = 10 * 60 * 1000;
+    const pingBackend = () => {
+      const now = Date.now();
+      const lastPing = localStorage.getItem('lastPingTravelApp');
+      if (!lastPing || now - parseInt(lastPing, 10) > TEN_MINUTES) {
+        fetch(`${process.env.REACT_APP_API_URL}/ping`).catch(() => {});
+        localStorage.setItem('lastPingTravelApp', now.toString());
+        console.log('Backend ping sent to /ping');
+      }
+    };
+    pingBackend();
+    const interval = setInterval(pingBackend, TEN_MINUTES);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div>

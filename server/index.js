@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const env = require("dotenv");
 const locationRoute = require("./routes/location");
 const userRoute = require("./routes/users");
+const pingRoute = require("./routes/ping");
 
 const app = express();
 
@@ -25,6 +26,8 @@ mongoose.connect("mongodb+srv://travelAdmin:admin@traveldb.lnkhvug.mongodb.net/?
 app.use("/api/locations", locationRoute);
 
 app.use("/api/users", userRoute);
+
+app.use("/api/ping", pingRoute);
 
 app.listen(3000, () => {
     console.log("SUCCESS -> Backend server started.")

@@ -33,7 +33,7 @@ const Login = ({ setShowLogin, setCurrentUser }) => {
         }
         try {
 
-            const res = await axios.post("/users/login", newUser);
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/users/login`, newUser);
 
             console.log(res);
 
