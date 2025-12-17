@@ -1,6 +1,8 @@
 // express -> open a port so we can listen to client
 // mongoose -> schemas, DBs
 
+require('dotenv').config();
+
 const express = require("express");
 const mongoose = require("mongoose");
 const env = require("dotenv");
@@ -19,7 +21,7 @@ app.use(function (req, res, next) {
 app.use(express.json()); // send JSON data to the client
 env.config();
 
-mongoose.connect("mongodb+srv://artcase1212_db_user:9jHgZEOQgLuqVya0@travelpalnner.dclyeqk.mongodb.net").then(() => {
+mongoose.connect(process.env.MONGO_URI).then(() => {
     console.log("SUCCESS -> Conected to DB.")
 }).catch((err) => console.log("FAILED -> Could not connect to DB!"))
 
